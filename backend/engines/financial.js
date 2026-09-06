@@ -8,3 +8,32 @@ export const breakEven=(fixed,price,variable)=>price>variable?Math.ceil(fixed/(p
 export const dscr=(monthly,annualDebt)=>annualDebt?R(monthly*12/annualDebt):null;
 export const recommended=(max,surplus,debt)=>R(max*Math.min(.85,Math.max(.45,surplus/debt>=1.5?.8:surplus/debt>=1.2?.65:.5)));
 export const viability=({market,dscr,risk,capital})=>Math.max(0,Math.min(100,Math.round(market*.32+Math.min(dscr/2,1)*28+(100-risk)*.22+capital*.18)));
+
+// Planning thresholds, deliberately kept in one place. They are UdyamSathi
+// guidance only; a lender or a government scheme makes its own decision.
+export const affordabilityThresholds={comfortable:0.20,caution:0.35};
+const number=(value,name,{minimum=0,required=false}={})=>{
+  if(value===null||value===undefined||value===''){if(required)throw Error('INVALID_'+name.toUpperCase());return null}
+  const parsed=Number(value);
+  if(!Number.isFinite(parsed)||parsed<minimum)throw Error('INVALID_'+name.toUpperCase());
+  return parsed;
+};
+
+export function calculateLoan({amount,annualRate,years,monthlySales=null,monthlyExpenses=null,existingMonthlyLoans=0}={}){
+  const principal=number(amount,'loan_amount',{minimum:1,required:true});
+  const rate=number(annualRate,'interest_rate',{minimum:0,required:true});
+  const duration=number(years,'loan_duration',{minimum:1,required:true});
+  if(duration>40)throw Error('INVALID_LOAN_DURATION');
+  const sales=number(monthlySales,'monthly_sales');
+  const expenses=number(monthlyExpenses,'monthly_expenses');
+  const existing=number(existingMonthlyLoans,'existing_monthly_loans')??0;
+  const months=Math.round(duration*12);
+  const monthlyEmi=emi(principal,rate,months);
+  const totalRepayment=R(monthlyEmi*months);
+  const totalInterest=R(totalRepayment-principal);
+  const canAssess=sales!==null&&expenses!==null;
+  const surplus=canAssess?R(sales-expenses-existing):null;
+  const emiShare=surplus&&surplus>0?R(monthlyEmi/surplus):null;
+  const affordability=!canAssess?'NEED_INCOME_INFO':surplus<=0?'TOO_HIGH':emiShare<=affordabilityThresholds.comfortable?'COMFORTABLE':emiShare<=affordabilityThresholds.caution?'CAUTION':'TOO_HIGH';
+  return {amount:principal,annualRate:rate,years:duration,months,monthlyEmi,totalInterest,totalRepayment,monthlySales:sales,monthlyExpenses:expenses,existingMonthlyLoans:existing,surplus,emiShare,affordability,thresholds:affordabilityThresholds};
+}
