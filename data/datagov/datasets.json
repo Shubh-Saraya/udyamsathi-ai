@@ -1,0 +1,96 @@
+{
+  "udyam_total": {
+    "name": "District Wise Total MSME Registered Enterprises under UDYAM Registration till last date",
+    "catalogUrl": "https://www.data.gov.in/catalog/udyam-registration-msme-registration",
+    "resourceUrl": "https://www.data.gov.in/resource/district-wise-total-msme-registered-enterprises-under-udyam-registration-till-last-date",
+    "resourceId": null,
+    "enabled": false,
+    "geography": "DISTRICT",
+    "publisher": "Ministry of Micro, Small and Medium Enterprises",
+    "reasonDisabled": "A resource UUID must be verified in the data.gov.in API console before synchronisation."
+  },
+  "udyam_services": {
+    "name": "District wise Services MSME Registered Enterprises under UDYAM Registration till last date",
+    "catalogUrl": "https://www.data.gov.in/catalog/udyam-registration-msme-registration",
+    "resourceUrl": "https://www.data.gov.in/resource/district-wise-services-msme-registered-enterprises-under-udyam-registration-till-last-date",
+    "resourceId": null,
+    "enabled": false,
+    "geography": "DISTRICT",
+    "publisher": "Ministry of Micro, Small and Medium Enterprises",
+    "reasonDisabled": "A resource UUID must be verified in the data.gov.in API console before synchronisation."
+  },
+  "udyam_manufacturing": {
+    "name": "District Level Manufacturing MSME Registered Enterprises under UDYAM Registration till last date",
+    "catalogUrl": "https://www.data.gov.in/catalog/udyam-registration-msme-registration",
+    "resourceId": null,
+    "enabled": false,
+    "geography": "DISTRICT",
+    "publisher": "Ministry of Micro, Small and Medium Enterprises",
+    "reasonDisabled": "A resource UUID must be verified in the data.gov.in API console before synchronisation."
+  },
+  "census_pca_maharashtra": {
+    "name": "Village/Town-wise Primary Census Abstract, 2011 - Maharashtra",
+    "catalogUrl": "https://www.data.gov.in/catalog/villagetown-wise-primary-census-abstract-2011-maharashtra",
+    "resourceId": null,
+    "enabled": false,
+    "geography": "VILLAGE",
+    "publisher": "Registrar General and Census Commissioner, India",
+    "dataYear": 2011,
+    "reasonDisabled": "The catalog is verified, but its API resource UUID has not been guessed. Configure it after verifying the resource in data.gov.in."
+  },
+  "village_amenities": {
+    "name": "Village Amenities, Census 2011",
+    "catalogUrl": "https://www.data.gov.in/catalog/village-amenities-census-2011",
+    "resourceId": null,
+    "enabled": false,
+    "geography": "VILLAGE",
+    "publisher": "Registrar General and Census Commissioner, India",
+    "dataYear": 2011,
+    "reasonDisabled": "The API resource UUID must be verified before synchronisation."
+  },
+  "mandi_prices": {
+    "name": "Current Daily Price of Various Commodities from Various Markets (Mandi)",
+    "catalogUrl": "https://www.data.gov.in/catalog/current-daily-price-various-commodities-various-markets-mandi",
+    "resourceId": "9ef84268-d588-465a-a308-a864a43d0070",
+    "enabled": true,
+    "geography": "DISTRICT",
+    "publisher": "Department of Agriculture and Farmers Welfare / AGMARKNET",
+    "reasonDisabled": null
+  },
+  "pm_kisan": {
+    "name": "Village and Gender-wise Beneficiaries Count under PM-KISAN Scheme",
+    "catalogUrl": "https://www.data.gov.in/catalog/pm-kisan-scheme",
+    "resourceId": null,
+    "enabled": false,
+    "geography": "VILLAGE",
+    "publisher": "Department of Agriculture and Farmers Welfare",
+    "reasonDisabled": "The catalog has district-specific resources; configure only the verified Maharashtra resource IDs that are legally/API available."
+  },
+  "odop": {
+    "name": "One District One Product",
+    "catalogUrl": "https://www.data.gov.in/catalog/one-district-one-product",
+    "resourceId": null,
+    "enabled": false,
+    "geography": "DISTRICT",
+    "publisher": "Government of India",
+    "reasonDisabled": "The API resource UUID must be verified before synchronisation."
+  },
+  "crop_production": {
+    "name": "District-wise, Season-wise Crop Production Statistics",
+    "catalogUrl": "https://www.data.gov.in/resource/district-wise-season-wise-crop-production-statistics-1997",
+    "resourceId": null,
+    "enabled": false,
+    "geography": "DISTRICT",
+    "publisher": "Department of Agriculture and Farmers Welfare",
+    "reasonDisabled": "The API resource UUID must be verified before synchronisation."
+  },
+  "kisan_call_centre": {
+    "name": "District-wise and Month-wise Queries from Farmers at Kisan Call Centre",
+    "catalogUrl": "https://www.data.gov.in/catalog/district-wise-and-month-wise-queries-farmers-kisan-call-centre-kcc",
+    "resourceId": null,
+    "enabled": false,
+    "geography": "DISTRICT",
+    "publisher": "Department of Agriculture and Farmers Welfare",
+    "reasonDisabled": "The API resource UUID must be verified before synchronisation."
+  }
+}
