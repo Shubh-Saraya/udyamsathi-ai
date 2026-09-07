@@ -1,4 +1,4 @@
-"""Import the validated Maharashtra Census 2011 workbook into UdyamSathi.
+"""Import the validated Maharashtra Census 2011 workbook into VyaparGuide.
 
 The workbook is read directly from OOXML with the Python standard library so
 the application stays dependency-free. Only geographic and business-relevant

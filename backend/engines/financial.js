@@ -9,7 +9,7 @@ export const dscr=(monthly,annualDebt)=>annualDebt?R(monthly*12/annualDebt):null
 export const recommended=(max,surplus,debt)=>R(max*Math.min(.85,Math.max(.45,surplus/debt>=1.5?.8:surplus/debt>=1.2?.65:.5)));
 export const viability=({market,dscr,risk,capital})=>Math.max(0,Math.min(100,Math.round(market*.32+Math.min(dscr/2,1)*28+(100-risk)*.22+capital*.18)));
 
-// Planning thresholds, deliberately kept in one place. They are UdyamSathi
+// Planning thresholds, deliberately kept in one place. They are VyaparGuide
 // guidance only; a lender or a government scheme makes its own decision.
 export const affordabilityThresholds={comfortable:0.20,caution:0.35};
 const number=(value,name,{minimum=0,required=false}={})=>{

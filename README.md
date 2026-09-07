@@ -1,6 +1,6 @@
-# UdyamSathi AI
+# VyaparGuide AI
 
-UdyamSathi AI is a Node/HTML/CSS/JavaScript MVP for rural micro-entrepreneurs. It combines a verified Maharashtra village identity with evidence-first business and financial guidance.
+VyaparGuide AI is a Node/HTML/CSS/JavaScript MVP for rural micro-entrepreneurs. It combines a verified Maharashtra village identity with evidence-first business and financial guidance.
 
 ## Run
 

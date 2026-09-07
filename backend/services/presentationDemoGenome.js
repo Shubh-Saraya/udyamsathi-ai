@@ -1,8 +1,8 @@
 // Presentation-only fallback. This module intentionally generates stable
 // illustrative values from the verified LGD village code. Every returned
 // metric is marked DEMO and must never be treated as official evidence.
-const hash=value=>[...String(value||'udyamsathi')].reduce((total,char)=>(total*31+char.charCodeAt(0))>>>0,7);
-const demoEvidence=(value,label,level,name,detail)=>({value,status:'DEMO',source:'UdyamSathi presentation scenario',sourceDataset:'Prototype demo estimate',sourcePublisher:'UdyamSathi AI',sourceUrl:null,geographyLevel:level,geographyName:name,dataYear:'Presentation demo',sourceUpdatedAt:null,retrievedAt:new Date().toISOString(),freshness:'SYNTHETIC_DEMO',detail:detail||label+' is a simulated presentation value, not government data.'});
+const hash=value=>[...String(value||'vyaparguide')].reduce((total,char)=>(total*31+char.charCodeAt(0))>>>0,7);
+const demoEvidence=(value,label,level,name,detail)=>({value,status:'DEMO',source:'VyaparGuide presentation scenario',sourceDataset:'Prototype demo estimate',sourcePublisher:'VyaparGuide AI',sourceUrl:null,geographyLevel:level,geographyName:name,dataYear:'Presentation demo',sourceUpdatedAt:null,retrievedAt:new Date().toISOString(),freshness:'SYNTHETIC_DEMO',detail:detail||label+' is a simulated presentation value, not government data.'});
 const isMissing=metric=>!metric||metric.status==='INSUFFICIENT_EVIDENCE';
 const replaceMissing=(metric,value,label,level,name,detail)=>isMissing(metric)?demoEvidence(value,label,level,name,detail):metric;
 const commodities=['Onion','Soybean','Cotton','Turmeric','Banana','Maize','Tomato','Pigeon pea'];
