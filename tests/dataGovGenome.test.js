@@ -29,11 +29,12 @@ test('calculates MSME intensity transparently',()=>{
   assert.equal(calculateMsmeDensity(2500,500000),5);
   assert.equal(calculateMsmeDensity(1,0),null);
 });
-test('genome returns insufficient evidence rather than fabricated data when caches are absent',async()=>{
+test('genome uses the bundled, validated Census value rather than a demo value',async()=>{
   const genome=await buildLocalBusinessGenome(location,{caches:{},config:await datasetConfig()});
   assert.equal(genome.location.status,'VERIFIED');
-  assert.equal(genome.metrics.population.status,'INSUFFICIENT_EVIDENCE');
-  assert.equal(genome.metrics.population.value,null);
+  assert.equal(genome.metrics.population.status,'VERIFIED');
+  assert.equal(genome.metrics.population.value,2007);
+  assert.equal(genome.metrics.population.source,'Census of India 2011');
   assert.equal(genome.businessEcosystem.totalUdyamMsmes.value,null);
   assert.deepEqual(genome.insights,[]);
 });
@@ -42,7 +43,7 @@ test('presentation mode generates stable, explicitly labelled demo values for a 
   const first=await buildLocalBusinessGenome(location,{caches:{},config,presentationDemo:true});
   const second=await buildLocalBusinessGenome(location,{caches:{},config,presentationDemo:true});
   assert.equal(first.demoMode,true);
-  assert.equal(first.metrics.population.status,'DEMO');
+  assert.equal(first.metrics.population.status,'VERIFIED');
   assert.equal(first.metrics.population.value,second.metrics.population.value);
   assert.equal(first.businessEcosystem.totalUdyamMsmes.status,'DEMO');
   assert.equal(first.market.commodities[0].status,'DEMO');
@@ -57,7 +58,7 @@ test('genome preserves evidence metadata and geographic levels for cached record
     udyam_manufacturing:{retrievedAt:'2026-09-06T00:00:00.000Z',records:[{district:'Jalgaon',count:1200}]}
   };
   const genome=await buildLocalBusinessGenome(location,{caches,config});
-  assert.equal(genome.metrics.population.value,1234);assert.equal(genome.metrics.population.dataYear,2011);assert.equal(genome.metrics.population.geographyLevel,'VILLAGE');assert.equal(genome.metrics.population.source,'data.gov.in');
+  assert.equal(genome.metrics.population.value,2007);assert.equal(genome.metrics.population.dataYear,2011);assert.equal(genome.metrics.population.geographyLevel,'VILLAGE');assert.equal(genome.metrics.population.source,'Census of India 2011');
   assert.equal(genome.businessEcosystem.totalUdyamMsmes.value,4200);assert.equal(genome.businessEcosystem.totalUdyamMsmes.geographyLevel,'DISTRICT');
   assert.equal(genome.businessEcosystem.msmesPerThousandPopulation.status,'INSUFFICIENT_EVIDENCE');
 });

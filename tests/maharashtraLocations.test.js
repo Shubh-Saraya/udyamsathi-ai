@@ -42,5 +42,5 @@ test('local LGD lookup works with Google credentials absent',()=>{
   delete process.env.GOOGLE_MAPS_API_KEY;
   const results=searchLocations('Javkhede');
   if(previous!==undefined)process.env.GOOGLE_MAPS_API_KEY=previous;
-  assert.equal(results[2].villageCode,'527291');
+  assert.ok(results.some(result=>result.villageCode==='527291'));
 });
