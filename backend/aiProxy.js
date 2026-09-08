@@ -2,7 +2,7 @@ import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { generateGeminiResponse } from './integrations/gemini.js';
+import { generateGeminiResponse, fallbackChatResponse } from './integrations/gemini.js';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 try{const env=await readFile(path.join(root,'.env'),'utf8');for(const line of env.split(/\r?\n/)){const found=line.match(/^([A-Z0-9_]+)=(.*)$/);if(found&&!process.env[found[1]])process.env[found[1]]=found[2].trim()}}catch{}
@@ -20,14 +20,13 @@ http.createServer(async(request,response)=>{
   try{
     if(request.url==='/api/chat'&&request.method==='POST'){
       const input=await body(request);
-      if(!String(input.question||'').trim())return send(response,{error:'Please enter a question.'},400);
+      const question=String(input.question||'').trim();
+      if(!question)return send(response,{error:'Please enter a question.'},400);
       try{
-        const result=await generateGeminiResponse({question:input.question,context:input.context||{},history:input.history||[]});
+        const result=await generateGeminiResponse({question,context:input.context||{},history:input.history||[]});
         return send(response,result);
       }catch(error){
-        const fallback=await generateGeminiResponse({question:input.question,context:input.context||{},history:input.history||[]}).catch(()=>null);
-        if(fallback?.text)return send(response,{...fallback,enabled:false,provider:'local-fallback',warning:'Gemini was unavailable; using the local advisory fallback.'});
-        return send(response,{error:error.message},502);
+        return send(response,{enabled:false,provider:'local-fallback',text:fallbackChatResponse({question,context:input.context||{}}),warning:'Gemini was unavailable; using the local advisory fallback.'});
       }
     }
     let raw='';request.on('data',chunk=>raw+=chunk);request.on('end',()=>requestUpstream(request,response,raw));
