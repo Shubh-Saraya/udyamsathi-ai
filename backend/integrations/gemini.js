@@ -2,15 +2,32 @@ const GEMINI_BASE_URL='https://generativelanguage.googleapis.com/v1beta/interact
 
 export const geminiConfigured=()=>Boolean(String(process.env.AI_API_KEY||process.env.GEMINI_API_KEY||'').trim());
 
+<<<<<<< HEAD
 export function buildChatPrompt({question,context,history=[]}){
   const safeHistory=Array.isArray(history)?history.slice(-6).map(item=>({role:item?.role==='model'?'model':'user',text:String(item?.text||'').slice(0,1200)})).filter(item=>item.text):[];
   return `You are VyaparGuide AI, a practical business advisor for rural and micro entrepreneurs in India.\n\nRULES:\n- Answer in the user's requested language: English, Hindi, or Marathi.\n- Use only the supplied business context for factual financial, village, score, loan and scheme claims.\n- Never invent scheme eligibility, loan approval, interest rates, village demand, competitor counts, government statistics, or financial figures.\n- Do not override deterministic calculations. Explain them in simple language.\n- If evidence is unavailable, clearly say so and suggest local verification.\n- Give practical next steps. Keep the answer concise and easy to understand.\n- You are a decision-support assistant, not a bank, lender, government officer, lawyer, or accountant.\n\nBUSINESS CONTEXT:\n${JSON.stringify(context,null,2)}\n\nRECENT CONVERSATION:\n${JSON.stringify(safeHistory,null,2)}\n\nUSER QUESTION:\n${String(question||'').slice(0,2000)}`;
+=======
+const languageName=language=>({hi:'Hindi',mr:'Marathi',en:'English'}[String(language||'en').toLowerCase()]||'English');
+
+export function buildChatPrompt({question,context,history=[]}){
+  const safeHistory=Array.isArray(history)?history.slice(-6).map(item=>({role:item?.role==='model'?'model':'user',text:String(item?.text||'').slice(0,1200)})).filter(item=>item.text):[];
+  const selectedLanguage=languageName(context?.language);
+  return `You are VyaparGuide AI, a practical business advisor for rural and micro entrepreneurs in India.\n\nRULES:\n- Write ONLY in ${selectedLanguage}. Do not mix in another language.\n- Use very simple, everyday words suitable for a first-time rural entrepreneur.\n- Keep the answer below 100 words. Start with the direct answer, then give at most 3 short next steps.\n- Use plain text only: no Markdown, no headings, no asterisks, no tables, and no technical terms or abbreviations. If a money term must be used, explain it in easy words.\n- Use only the supplied business context for factual financial, village, score, loan and scheme claims.\n- Never invent scheme eligibility, loan approval, interest rates, village demand, competitor counts, government statistics, or financial figures.\n- Do not override deterministic calculations. Explain them in simple language.\n- If evidence is unavailable, clearly say so and suggest local verification.\n- You are a decision-support assistant, not a bank, lender, government officer, lawyer, or accountant.\n\nBUSINESS CONTEXT:\n${JSON.stringify(context,null,2)}\n\nRECENT CONVERSATION:\n${JSON.stringify(safeHistory,null,2)}\n\nUSER QUESTION:\n${String(question||'').slice(0,2000)}`;
+}
+
+export function cleanAssistantText(text){
+  return String(text||'').replace(/\r/g,'').replace(/^#{1,6}\s*/gm,'').replace(/\*\*(.*?)\*\*/g,'$1').replace(/__(.*?)__/g,'$1').replace(/`([^`]+)`/g,'$1').replace(/^\s*[-*+]\s+/gm,'• ').replace(/^\s*[-_]{3,}\s*$/gm,'').replace(/\n{3,}/g,'\n\n').trim();
+>>>>>>> 353b2bb (Fix Gemini chatbot integration)
 }
 
 export function extractGeminiText(payload){
   if(typeof payload?.output_text==='string'&&payload.output_text.trim())return payload.output_text.trim();
   const steps=Array.isArray(payload?.steps)?payload.steps:[];
+<<<<<<< HEAD
   const text=steps.flatMap(step=>step?.model_output?.content||step?.modelOutput?.content||[]).map(item=>typeof item?.text==='string'?item.text:item?.text?.text).filter(Boolean).join('\n').trim();
+=======
+  const text=steps.filter(step=>step?.type==='model_output').flatMap(step=>Array.isArray(step?.content)?step.content:[]).map(item=>item?.text).filter(Boolean).join('\n').trim();
+>>>>>>> 353b2bb (Fix Gemini chatbot integration)
   if(text)return text;
   return payload?.candidates?.flatMap(candidate=>candidate?.content?.parts||[]).map(part=>part?.text).filter(Boolean).join('\n').trim()||'';
 }
@@ -26,10 +43,17 @@ export async function generateGeminiResponse({question,context,history=[]}){
   const apiKey=String(process.env.AI_API_KEY||process.env.GEMINI_API_KEY||'').trim();
   if(!apiKey)return {enabled:false,provider:'local-fallback',text:fallbackChatResponse({question,context})};
   const model=String(process.env.GEMINI_MODEL||'gemini-3.6-flash').trim();
+<<<<<<< HEAD
   const response=await fetch(GEMINI_BASE_URL,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify({model,input:buildChatPrompt({question,context,history}),system_instruction:'You are a concise, evidence-grounded business advisor. Follow the supplied rules exactly.',generation_config:{temperature:0.3}})});
   if(!response.ok){const detail=await response.text().catch(()=> '');throw new Error(`Gemini API request failed (${response.status})${detail?`: ${detail.slice(0,300)}`:''}`)}
   const payload=await response.json();
   const text=extractGeminiText(payload);
+=======
+  const response=await fetch(GEMINI_BASE_URL,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify({model,input:buildChatPrompt({question,context,history}),system_instruction:'You are a concise, evidence-grounded business advisor. Follow the supplied rules exactly.'})});
+  if(!response.ok){const detail=await response.text().catch(()=> '');throw new Error(`Gemini API request failed (${response.status})${detail?`: ${detail.slice(0,300)}`:''}`)}
+  const payload=await response.json();
+  const text=cleanAssistantText(extractGeminiText(payload));
+>>>>>>> 353b2bb (Fix Gemini chatbot integration)
   if(!text)throw new Error('Gemini returned an empty response');
   return {enabled:true,provider:'gemini',model,text};
 }

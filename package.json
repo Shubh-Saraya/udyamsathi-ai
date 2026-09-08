@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"name":"vyaparguide-ai","version":"1.0.0","type":"module","scripts":{"start":"node backend/aiProxy.js","start:core":"node backend/server.js","test":"node --test tests/*.test.js","sync:datagov":"node backend/scripts/syncDataGov.js","build:genome":"node backend/scripts/buildGenomeCache.js","refresh:data":"npm run sync:datagov && npm run build:genome"}}
+=======
+{"name":"vyaparguide-ai","version":"1.0.0","type":"module","scripts":{"start":"node backend/aiProxy.js","test":"node --test tests/*.test.js","sync:datagov":"node backend/scripts/syncDataGov.js","build:genome":"node backend/scripts/buildGenomeCache.js","refresh:data":"npm run sync:datagov && npm run build:genome"}}
+>>>>>>> 353b2bb (Fix Gemini chatbot integration)

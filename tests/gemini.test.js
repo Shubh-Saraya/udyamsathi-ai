@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+<<<<<<< HEAD
 import { buildChatPrompt, extractGeminiText, fallbackChatResponse, generateGeminiResponse } from '../backend/integrations/gemini.js';
+=======
+import { buildChatPrompt, cleanAssistantText, extractGeminiText, fallbackChatResponse, generateGeminiResponse } from '../backend/integrations/gemini.js';
+>>>>>>> 353b2bb (Fix Gemini chatbot integration)
 
 test('Gemini integration falls back cleanly when no API key is configured', async()=>{
   const previous=process.env.AI_API_KEY;
@@ -26,6 +30,23 @@ test('Gemini response text extraction supports interaction output_text',()=>{
   assert.equal(extractGeminiText({output_text:'Hello entrepreneur'}),'Hello entrepreneur');
 });
 
+<<<<<<< HEAD
+=======
+test('Gemini prompt requires the selected language and plain formatting',()=>{
+  const prompt=buildChatPrompt({question:'मला कर्ज घ्यावे का?',context:{language:'mr'},history:[]});
+  assert.match(prompt,/ONLY in Marathi/);
+  assert.match(prompt,/no Markdown/);
+});
+
+test('Gemini response text extraction supports Interactions model output steps',()=>{
+  assert.equal(extractGeminiText({steps:[{type:'model_output',content:[{type:'text',text:'Hello from Gemini'}]}]}),'Hello from Gemini');
+});
+
+test('Gemini response text cleanup removes Markdown decorations',()=>{
+  assert.equal(cleanAssistantText('### Plan\n**Keep** ₹20,000\n---\n* Start small'),'Plan\nKeep ₹20,000\n\n• Start small');
+});
+
+>>>>>>> 353b2bb (Fix Gemini chatbot integration)
 test('Local fallback remains useful for first-step questions',()=>{
   const text=fallbackChatResponse({question:'What should I do first?',context:{}});
   assert.match(text,/30-day pilot/);
