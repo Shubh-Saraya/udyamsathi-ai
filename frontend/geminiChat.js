@@ -10,7 +10,7 @@
     const input=document.getElementById('question'),answer=document.getElementById('answer');
     const question=String(input?.value||'').trim();
     if(!question||!answer)return;
-    const x=window.latest;
+    const x=typeof latest!=='undefined'?latest:null;
     answer.textContent='Thinking…';
     try{
       const result=await postJson('/api/chat',{question,context:contextFromAssessment(x),history});
