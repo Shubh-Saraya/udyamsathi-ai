@@ -26,13 +26,10 @@ http.createServer(async(request,response)=>{
         const result=await generateGeminiResponse({question,context:input.context||{},history:input.history||[]});
         return send(response,result);
       }catch(error){
-<<<<<<< HEAD
-=======
         console.error('Gemini error:',error.message);
->>>>>>> 353b2bb (Fix Gemini chatbot integration)
         return send(response,{enabled:false,provider:'local-fallback',text:fallbackChatResponse({question,context:input.context||{}}),warning:'Gemini was unavailable; using the local advisory fallback.'});
       }
     }
     let raw='';request.on('data',chunk=>raw+=chunk);request.on('end',()=>requestUpstream(request,response,raw));
   }catch(error){send(response,{error:error.message},400)}
-}).listen(publicPort,()=>console.log(`VyaparGuide AI running at http://localhost:${publicPort}`));
+}).listen(publicPort,()=>console.log(`VyaparGuide AI app ready at http://localhost:${publicPort}`));

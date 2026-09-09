@@ -17,13 +17,8 @@
       answer.innerHTML=escape(result.text).replace(/\n/g,'<br>');
       history.push({role:'user',text:question},{role:'model',text:result.text});
       history=history.slice(-8);
-<<<<<<< HEAD
-      if(result.provider==='local-fallback')answer.innerHTML+='<small class="muted"><br>Using the built-in advisory fallback. Add AI_API_KEY later to enable Gemini.</small>';
-    }catch(error){answer.textContent='The business helper is temporarily unavailable. Your local blueprint and financial tools are still available.';console.error(error)}
-=======
       console.debug('VyaparGuide chat response received:', {provider:result.provider, model:result.model});
       if(result.provider==='local-fallback')answer.innerHTML+='<small class="muted"><br>Using the built-in advisory fallback. Gemini could not be reached just now.</small>';
     }catch(error){answer.textContent='The business helper is temporarily unavailable. Your local blueprint and financial tools are still available.';console.error('VyaparGuide chat error:',error.message)}
->>>>>>> 353b2bb (Fix Gemini chatbot integration)
   };
 })();
