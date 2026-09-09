@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VyaparGuide AI</title><link rel="stylesheet" href="frontend/style.css"><link rel="stylesheet" href="frontend/genome.css"><link rel="stylesheet" href="frontend/presentation.css"><link rel="stylesheet" href="frontend/upgrade.css"></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VyaparGuide AI</title><link rel="stylesheet" href="frontend/style.css"><link rel="stylesheet" href="frontend/genome.css"><link rel="stylesheet" href="frontend/presentation.css"><link rel="stylesheet" href="frontend/upgrade.css"><link rel="stylesheet" href="frontend/logo.css"></head>
 <body>
-  <header><b>VYAPARGUIDE <i>AI</i></b><span data-i18n="app.tagline">Your Local Business. Your Financial Blueprint.</span><button type="button" onclick="showPersonas()" data-i18n="app.demo">Demo mode</button></header>
+  <header><a class="brand" href="#app" aria-label="VyaparGuide AI home"><img src="frontend/assets/vyaparguide-logo.png" alt="VyaparGuide — Your Business. Your Guide. Your Growth."></a><span data-i18n="app.tagline">Your Local Business. Your Financial Blueprint.</span><button type="button" onclick="showPersonas()" data-i18n="app.demo">Demo mode</button></header>
   <main id="app">
     <section class="hero"><p class="eyebrow" data-i18n="app.heroEyebrow">HYPER-LOCAL BUSINESS HELPER</p><h1 data-i18n="app.heroTitle">Start a business with confidence.</h1><p data-i18n="app.heroText">See simple business guidance, money planning and support options for your area.</p><button class="primary" type="button" onclick="document.querySelector('#profile').scrollIntoView()" data-i18n="app.build">Build my blueprint</button></section>
     <section id="personas" class="card" hidden><h2>Choose a demo entrepreneur</h2><div id="personaCards" class="cards"></div></section>
